@@ -55,7 +55,7 @@ model = tf.keras.models.load_model('./dyslexia_scanner.h5')
 app = FastAPI()
 
 # This endpoint is for a test (or health check) to this server
-@app.get("/")
+@app.get("/"methods=["GET", "POST"])
 def index():
     return "Hello world from ML endpoint!"
 

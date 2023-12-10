@@ -42,9 +42,9 @@ def test_dyslexia():
 
         # Interpret the prediction
         if prediction_value > 0.5:
-            diagnosis = "Dyslexia"
+            diagnosis = "Unfortunately, there is a >50% chance of suffering from dyslexia."
         else:
-            diagnosis = "Normal"
+            diagnosis = "Congratulations, you are normal."
 
         return jsonify({"diagnosis": diagnosis, "confidence": float(prediction_value)})
     except Exception as e:

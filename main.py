@@ -17,6 +17,7 @@ firebase_admin.initialize_app(options={
     'credential': firebase_admin.credentials.Certificate(os.getenv('GOOGLE_APPLICATION_CREDENTIALS'))
 })
 
+# Connect to firestore
 db=firestore.client()
 
 model_path = os.path.join('models', 'dyslexia_scanner.h5')

@@ -42,7 +42,7 @@ def post_to_firestore(diagnosis, confidence, custom_id=None):
         doc_ref.set(data)
         return {"id": int(custom_id), "diagnosis": diagnosis, "confidence": confidence}
     else:
-        # Provide your own logic for generating sequential custom IDs as integers
+
         sequential_id = generate_sequential_id()
         data = {
             "id": sequential_id,
@@ -54,11 +54,7 @@ def post_to_firestore(diagnosis, confidence, custom_id=None):
         doc_ref.set(data)
         return {"id": sequential_id, "diagnosis": diagnosis, "confidence": confidence}
 
-# Example of a simple sequential ID generator returning an integer
 def generate_sequential_id():
-    # Implement your own logic to generate sequential IDs as integers
-    # This could involve querying the collection for the latest ID and incrementing it
-    # Here, I'm using a simple counter as an example
     counter = db.collection('counter').document('dyslexia_counter').get().to_dict()
     if counter is None:
         counter = {"value": 1}
@@ -70,9 +66,6 @@ def generate_sequential_id():
 
 # Example of a simple sequential ID generator
 def generate_sequential_id():
-    # Implement your own logic to generate sequential IDs
-    # This could involve querying the collection for the latest ID and incrementing it
-    # Here, I'm using a simple counter as an example
     counter = db.collection('counter').document('dyslexia_counter').get().to_dict()
     if counter is None:
         counter = {"value": 1}

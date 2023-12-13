@@ -1,17 +1,31 @@
-FROM python:3.10.3-slim-buster
+# Use an official TensorFlow runtime as a parent image
+FROM tensorflow/tensorflow:latest
 
-WORKDIR /workspace
+# Set the working directory in the container
+WORKDIR /app
 
-COPY requirements.txt requirements.txt
+# Install OpenCV dependencies
+RUN apt-get update && \
+    apt-get install -y libsm6 libxext6 libxrender-dev libglib2.0-0 libsm6 libxext6 libxrender1 libfontconfig1
 
-RUN pip install -r requirements.txt
+# Copy the requirements.txt and .env files into the container at /app
+COPY requirements.txt ./
+COPY .env ./
 
+# Copy the credentials file into the container at /app
+COPY credentials.json /app/
+
+# Install any needed packages specified in requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the current directory contents into the container at /app
 COPY . .
 
-ENV PYTHONUNBUFFERED=1
+# Set environment variables from .env file
+ENV $(cat .env | grep -v ^# | xargs)
 
-ENV HOST 0.0.0.0
+# Expose port 5000 for the Flask app
+EXPOSE 5000
 
-EXPOSE 8080
-
-CMD ["python", "main.py"]
+# Define the command to run the application
+CMD ["flask", "run", "--host=0.0.0.0"]
